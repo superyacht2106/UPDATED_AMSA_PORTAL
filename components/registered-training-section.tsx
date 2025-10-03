@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { FileText, Eye, X, ExternalLink } from "lucide-react"
+import { FileText, Eye, X, ExternalLink, BookOpen } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/dialog"
 
 const documents = [
   {
@@ -10,22 +11,37 @@ const documents = [
     title: "ASQA Certificate of Registration",
     description: "Australian Skills Quality Authority registration certificate",
     image: "/images/asqa-certificate.png",
+    type: "image"
   },
   {
     id: "business-registration",
     title: "Record of Registration for Business Name",
     description: "ASIC business name registration for Superyacht Crew Academy",
     image: "/images/asic-business-registration.jpeg",
+    type: "image"
   },
   {
-    id: "marshall-islands-certificate",
+    id: "tqcsi-certificate",
     title: "TQCSI Certificate of Registration",
     description: "ISO 9001:2015 Quality Management System certification",
     image: "/images/tqcsi-certificate.png",
+    type: "image"
+  },
+  {
+    id: "marshall-islands-certificate",
+    title: "Marshall Islands Certificate",
+    description: "Marshall Islands certificate of registration",
+    pdfUrl: "/docs/MARSHALL_ISLANDS_CERT.pdf",
+    type: "pdf"
   },
 ]
 
-export function RegisteredTrainingSection() {
+interface RegisteredTrainingSectionProps {
+  onBack: () => void
+  selectedDocument?: string | null
+}
+
+export function RegisteredTrainingSection({ onBack, selectedDocument }: RegisteredTrainingSectionProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
 
   const openImage = (imageSrc: string) => {
@@ -43,7 +59,10 @@ export function RegisteredTrainingSection() {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <button className="flex items-center text-gray-600 hover:text-gray-800 mb-4">
+        <button 
+          onClick={onBack}
+          className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+        >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -70,15 +89,16 @@ export function RegisteredTrainingSection() {
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         <h3 className="font-medium text-gray-900 mb-4">Supporting Documentation</h3>
         <p className="text-gray-700 mb-6">
-          See images below for ASQA certificate of registration, Record of Registration for Business Name & Marshall
-          Islands certificate.
+          See images below for ASQA certificate of registration, Record of Registration for Business Name, Marshall
+          Islands certificate, and TQCSI certificate of registration.
         </p>
 
         {/* Document Tiles */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {documents.map((doc) => (
             <div
               key={doc.id}
+              id={doc.id}
               className="border border-gray-200 rounded-lg p-4 hover:border-gray-300 transition-colors flex flex-col h-full"
             >
               <div className="flex items-start space-x-3 mb-4 flex-1">
@@ -88,15 +108,42 @@ export function RegisteredTrainingSection() {
                   <p className="text-xs text-gray-600">{doc.description}</p>
                 </div>
               </div>
-              <Button
-                onClick={() => openImage(doc.image)}
-                variant="outline"
-                size="sm"
-                className="w-full flex items-center justify-center space-x-2 mt-auto"
-              >
-                <Eye className="w-4 h-4" />
-                <span>View Document</span>
-              </Button>
+              {doc.type === "pdf" && doc.pdfUrl ? (
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full flex items-center justify-center space-x-2 mt-auto"
+                    >
+                      <BookOpen className="w-4 h-4" />
+                      <span>View Document</span>
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-3xl w-full p-0 overflow-hidden">
+                    <DialogTitle className="p-4 border-b">{doc.title}</DialogTitle>
+                    <div className="w-full h-[80vh]">
+                      <iframe
+                        src={doc.pdfUrl}
+                        width="100%"
+                        height="100%"
+                        style={{ minHeight: "70vh", border: "none" }}
+                        title={doc.title}
+                      />
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              ) : (
+                <Button
+                  onClick={() => openImage(doc.image!)}
+                  variant="outline"
+                  size="sm"
+                  className="w-full flex items-center justify-center space-x-2 mt-auto"
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>View Document</span>
+                </Button>
+              )}
             </div>
           ))}
         </div>
@@ -105,13 +152,22 @@ export function RegisteredTrainingSection() {
         <div className="border-t border-gray-200 pt-6">
           <h4 className="font-medium text-gray-900 mb-4">Scope of Registration</h4>
           <p className="text-gray-700 mb-4 leading-relaxed">
-            Please click below to view our full scope of registration on training.gov, we are approved by ASQA to
-            provide MARSS00033 Safety Training Certification Skill Set.
+            Please click below to view our full scope of registration on training.gov, we are approved by ASQA to deliver & assess MARSS00033 Safety Training Certification Skill Set.
           </p>
-          <Button onClick={openScopeLink} className="flex items-center space-x-2">
-            <ExternalLink className="w-4 h-4" />
-            <span>View Full Scope on Training.gov</span>
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button onClick={openScopeLink} className="flex items-center space-x-2">
+              <ExternalLink className="w-4 h-4" />
+              <span>View Full Scope on Training.gov</span>
+            </Button>
+            <Button 
+              onClick={() => openImage("/images/scope_registration.png")}
+              variant="outline"
+              className="flex items-center space-x-2"
+            >
+              <Eye className="w-4 h-4" />
+              <span>View Image of Scope</span>
+            </Button>
+          </div>
         </div>
       </div>
 

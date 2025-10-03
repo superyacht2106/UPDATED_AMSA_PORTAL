@@ -1,10 +1,17 @@
 import { Building, Globe, Mail, Phone, MapPin, User, Hash, FileText } from "lucide-react"
 
-export function ContactSection() {
+interface ContactSectionProps {
+  onBack: () => void
+}
+
+export function ContactSection({ onBack }: ContactSectionProps) {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <button className="flex items-center text-gray-600 hover:text-gray-800 mb-4">
+        <button 
+          onClick={onBack}
+          className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+        >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -95,7 +102,14 @@ export function ContactSection() {
               <Globe className="w-4 h-4 text-gray-500" />
               <div>
                 <p className="text-sm font-medium text-gray-900">Website</p>
-                <p className="text-gray-700">www.superyacht-crew-academy.com</p>
+                <a
+                  href="https://www.superyacht-crew-academy.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-700 underline hover:text-blue-900"
+                >
+                  www.superyacht-crew-academy.com
+                </a>
               </div>
             </div>
 
@@ -103,7 +117,12 @@ export function ContactSection() {
               <Mail className="w-4 h-4 text-gray-500" />
               <div>
                 <p className="text-sm font-medium text-gray-900">Email</p>
-                <p className="text-gray-700">train@superyachttraining.com.au</p>
+                <a
+                  href="mailto:train@superyachttraining.com.au"
+                  className="text-blue-700 underline hover:text-blue-900"
+                >
+                  train@superyachttraining.com.au
+                </a>
               </div>
             </div>
 
@@ -111,7 +130,12 @@ export function ContactSection() {
               <Phone className="w-4 h-4 text-gray-500" />
               <div>
                 <p className="text-sm font-medium text-gray-900">Phone</p>
-                <p className="text-gray-700">(02) 9979 9669</p>
+                <a
+                  href="tel:+61299799669"
+                  className="text-blue-700 underline hover:text-blue-900"
+                >
+                  (02) 9979 9669
+                </a>
               </div>
             </div>
           </div>
@@ -126,8 +150,18 @@ export function ContactSection() {
               <div>
                 <p className="text-sm font-medium text-gray-900">Main Contact</p>
                 <p className="text-gray-700">Greg Newby</p>
-                <p className="text-sm text-gray-600">0405 525 521</p>
-                <p className="text-sm text-gray-600">greg@superyachttraining.com.au</p>
+                <a
+                  href="tel:+61405525521"
+                  className="text-blue-700 underline hover:text-blue-900 text-sm"
+                >
+                  0405 525 521
+                </a>
+                <a
+                  href="mailto:greg@superyachttraining.com.au"
+                  className="text-blue-700 underline hover:text-blue-900 text-sm block"
+                >
+                  greg@superyachttraining.com.au
+                </a>
               </div>
             </div>
 
@@ -136,8 +170,18 @@ export function ContactSection() {
               <div>
                 <p className="text-sm font-medium text-gray-900">Communications/Marketing</p>
                 <p className="text-gray-700">Sam Taylor</p>
-                <p className="text-sm text-gray-600">0413 659 790</p>
-                <p className="text-sm text-gray-600">sam@superyachttraining.com.au</p>
+                <a
+                  href="tel:+61413659790"
+                  className="text-blue-700 underline hover:text-blue-900 text-sm"
+                >
+                  0413 659 790
+                </a>
+                <a
+                  href="mailto:sam@superyachttraining.com.au"
+                  className="text-blue-700 underline hover:text-blue-900 text-sm block"
+                >
+                  sam@superyachttraining.com.au
+                </a>
               </div>
             </div>
           </div>

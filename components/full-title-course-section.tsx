@@ -1,10 +1,17 @@
 import { FileText, Award, BookOpen, Anchor } from "lucide-react"
 
-export function FullTitleCourseSection() {
+interface FullTitleCourseSectionProps {
+  onBack: () => void
+}
+
+export function FullTitleCourseSection({ onBack }: FullTitleCourseSectionProps) {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <button className="flex items-center text-gray-600 hover:text-gray-800 mb-4">
+        <button 
+          onClick={onBack}
+          className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+        >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -28,7 +35,6 @@ export function FullTitleCourseSection() {
       {/* Answer Section */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         <h3 className="font-medium text-gray-900 mb-6">Course Alignment</h3>
-        <h3 className="font-medium text-gray-900 mb-4">Course Alignment</h3>
         <p className="text-gray-700 mb-6 leading-relaxed">
           This course is fully aligned with the MARSS00033 Safety Training Certification Skill Set under the Australian
           Maritime Training Package and corresponds directly to the competencies and learning outcomes prescribed in the
@@ -148,6 +154,12 @@ export function FullTitleCourseSection() {
                       STCW Personal Safety and Social Responsibilities
                     </div>
                     <div className="text-xs text-gray-600 mt-1">IMO Model Course 1.21</div>
+                  </div>
+                  <div className="bg-gray-50 border border-gray-200 rounded-md p-3 md:col-span-2">
+                    <div className="font-medium text-sm text-gray-900">
+                      STCW Proficiency in Maritime Security Awareness
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1">IMO Model Course 3.27</div>
                   </div>
                 </div>
               </div>

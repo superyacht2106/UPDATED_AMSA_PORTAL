@@ -1,10 +1,17 @@
 import { FileText, User, Heart, MessageSquare, ClipboardCheck, Shield, ImageIcon, CreditCard } from "lucide-react"
 
-export function EntryStandardsSection() {
+interface EntryStandardsSectionProps {
+  onBack: () => void
+}
+
+export function EntryStandardsSection({ onBack }: EntryStandardsSectionProps) {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <button className="flex items-center text-gray-600 hover:text-gray-800 mb-4">
+        <button 
+          onClick={onBack}
+          className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+        >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -154,11 +161,48 @@ export function EntryStandardsSection() {
             </div>
 
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
-              <h5 className="font-medium text-gray-900 mb-2">Recognition of Prior Learning (RPL)</h5>
+              <h5 className="font-medium text-gray-900 mb-2">Recognition of Prior Learning (RPL) – STCW Short Courses</h5>
+              <p className="text-sm text-gray-700 mb-2">
+                In accordance with AMSA's MT03 Recognition of Prior Learning Policy, recognition of prior learning (RPL) is not offered for most STCW short courses due to their practical, hands-on training requirements. All students must complete the full applicable AMSA-approved course unless they meet one of the few exceptions recognised by AMSA:
+              </p>
+              <div className="space-y-3 mt-3">
+                <div>
+                  <h6 className="font-medium text-sm text-gray-900">Elementary First Aid (Table A-VI/1-3)</h6>
+                  <p className="text-sm text-gray-700 mb-1">
+                    RPL (no challenge test) will be granted to students who provide evidence of:
+                  </p>
+                  <ul className="list-disc pl-6 text-sm text-gray-700">
+                    <li>A current Australian Senior First Aid certificate (e.g. Red Cross, St John Ambulance, CBD College, or similar) that includes HLTAID003 or higher, and</li>
+                    <li>CPR refresher completed within the past 12 months</li>
+                  </ul>
+                </div>
+                <div>
+                  <h6 className="font-medium text-sm text-gray-900">Fire Prevention and Fire Fighting (Table A-VI/1-2)</h6>
+                  <p className="text-sm text-gray-700 mb-1">
+                    RPL (no challenge test) may be granted to applicants who have completed:
+                  </p>
+                  <ul className="list-disc pl-6 text-sm text-gray-700">
+                    <li>The RAN Advanced NBCD course including 2 days of practical firefighting, or</li>
+                    <li>The RAN Advanced Combat Survivability course including its firefighting component</li>
+                  </ul>
+                </div>
+                <div>
+                  <h6 className="font-medium text-sm text-gray-900">Overseas students pursuing a higher-level AMSA certificate</h6>
+                  <p className="text-sm text-gray-700 mb-1">
+                    Where the student has completed a Deck or Engineer Watchkeeper course overseas and is undertaking further studies in Australia
+                  </p>
+                </div>
+                <div>
+                  <h6 className="font-medium text-sm text-gray-900">Engineer Watchkeeper workshop skills (Table A-III/1)</h6>
+                  <p className="text-sm text-gray-700 mb-1">
+                    RPL (no challenge test) may be granted based on evidence aligned to Marine Order 72 Schedule 2. Candidates may be issued a bridging/gap training schedule to meet STCW Reg III/1 if required.
+                  </p>
+                </div>
+              </div>
+
+
               <p className="text-sm text-gray-700">
-                We do not give RPL for STCW courses. Credit Transfer / Mutual Recognition Club Sail Pty Ltd t/a
-                Superyacht Crew Academy will recognise Qualifications and/or Statements of Attainment issued by all
-                other Registered Training Organisations.
+                For those without a current HLTAID011, we will deliver this unit as part of the course in line with AMSA’s requirements.
               </p>
             </div>
           </div>

@@ -3,28 +3,33 @@
 import { useState } from "react"
 import { FileText, BookOpen, Clock, Users, CheckSquare, Eye, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { GoogleSheetViewer } from "@/components/ui/google-sheet-viewer"
 
 const lessonPlanUrls = {
   HLTAID011: {
-    single: "", // To be added when provided
+    single: "/docs/HLTAID011_Provide_First_Aid_Lesson_Plan.pdf",
   },
   MARF035: {
     theory: "https://drive.google.com/file/d/1xD7_nYYnLNBdHRBr-35gmAf8LtCZ_hKf/preview",
-    practical: "", // To be added when provided
+    practical: "/docs/MARF035_Firefighting_Practical_Lesson_Plan_V1.pdf",
   },
   MARF037: {
-    single: "", // To be added when provided
+    single: "/docs/MARF037_Lesson_Plan_Online Course-2.pdf",
   },
   MARF041: {
-    single: "", // To be added when provided
+    single: "/docs/MARF041_PSSR_Online&Practical_Lesson_Plan.pdf", // Updated to local PDF
   },
   MARF046: {
-    theory: "", // To be added when provided
-    practical: "", // To be added when provided
+    theory: "/docs/MARF046_PST_Theory_Lesson_Plan_V1.pdf",
+    practical: "/docs/MARF046_PST_Practical_Lesson_Plan_V1.pdf",
   },
 }
 
-export function CourseCurriculumSection() {
+interface CourseCurriculumSectionProps {
+  onBack: () => void
+}
+
+export function CourseCurriculumSection({ onBack }: CourseCurriculumSectionProps) {
   const [selectedLessonPlan, setSelectedLessonPlan] = useState<string | null>(null)
 
   const handleViewLessonPlan = (unitCode: string, type = "single") => {
@@ -49,7 +54,10 @@ export function CourseCurriculumSection() {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <button className="flex items-center text-gray-600 hover:text-gray-800 mb-4">
+        <button 
+          onClick={onBack}
+          className="flex items-center text-gray-600 hover:text-gray-800 mb-4"
+        >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -82,6 +90,11 @@ export function CourseCurriculumSection() {
 
       {/* Answer Section */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <div className="border border-gray-200 rounded-md p-4 mb-6">
+          <p className="text-gray-800">
+            We intend to run via blended learning, a mix of online learning and in classroom & practical training. Our online training will be run through our LMS called Axcelerate, students will be given a student portal log in to complete online course components. Our classroom training will be conducted at our office facility.
+          </p>
+        </div>
         <h3 className="font-medium text-gray-900 mb-6">Curriculum Structure & Lesson Plans</h3>
         <p className="text-gray-700 mb-6">
           Please find below lesson plans for each unit of competency which includes the required information.
@@ -97,11 +110,7 @@ export function CourseCurriculumSection() {
                 <h4 className="font-semibold text-gray-900 mb-3">Total Course Duration</h4>
 
                 {/* Duration breakdown sub-tiles */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div className="bg-gray-50 border border-gray-200 rounded-md p-3 text-center">
-                    <div className="font-medium text-lg text-gray-900">8 Days</div>
-                    <div className="text-xs text-gray-600">Course Duration</div>
-                  </div>
+                <div className="grid grid-cols-1 gap-3">
                   <div className="bg-gray-50 border border-gray-200 rounded-md p-3 text-center">
                     <div className="font-medium text-lg text-gray-900">48.5 Hours</div>
                     <div className="text-xs text-gray-600">Total Training Hours</div>
@@ -198,7 +207,7 @@ export function CourseCurriculumSection() {
                         <div className="font-medium text-sm text-gray-900 mb-1">
                           MARF041 – Observe personal safety and social responsibility
                         </div>
-                        <div className="text-xs text-gray-600">Online</div>
+                        <div className="text-xs text-gray-600">6 hours Online, 2 hours classroom practical</div> {/* Updated delivery mode */}
                       </div>
                       <div className="text-sm font-semibold text-gray-700">8 Hours</div>
                     </div>
@@ -343,13 +352,29 @@ export function CourseCurriculumSection() {
               </div>
             </div>
           </div>
+          <div className="border border-blue-100 rounded-lg p-6 mt-4 bg-white">
+            <p className="text-gray-700 leading-relaxed">
+              Superyacht Crew Academy delivers this course in alignment with AMSA MT02 – STCW Training and Assessment, Quality Standards and Use of Simulators. While we do not utilise simulators, our training combines online SCORM-compliant learning and practical face-to-face assessment. All training and assessment practices comply with STCW Regulation I/6, and our online components follow the guidance outlined in MT02 for e-learning and blended delivery, ensuring the integrity and quality of training outcomes.
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Lesson Plan Modal */}
       {selectedLessonPlan && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="relative w-full h-full max-w-6xl max-h-full bg-white rounded-lg overflow-hidden">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+          onClick={closeLessonPlan} // Close when clicking the background
+          tabIndex={-1} // Make div focusable for keyboard events
+          onKeyDown={e => {
+            if (e.key === "Escape") closeLessonPlan();
+          }}
+        >
+          <div
+            className="relative w-full max-w-6xl max-h-[90vh] bg-white rounded-lg overflow-hidden shadow-lg"
+            style={{ height: '80vh' }}
+            onClick={e => e.stopPropagation()} // Prevent background click from closing when clicking inside modal
+          >
             <div className="absolute top-4 right-4 z-10">
               <Button
                 onClick={closeLessonPlan}
