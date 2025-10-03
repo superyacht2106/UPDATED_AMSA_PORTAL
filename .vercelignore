@@ -1,0 +1,3 @@
+# Ignore pnpm files to force npm usage
+pnpm-lock.yaml
+.pnpm-store/
